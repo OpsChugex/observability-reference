@@ -10,7 +10,8 @@ assert policy["evidence_id"] == "OCX-OBS-001"
 assert 99 < policy["availability_target_percent"] < 100
 assert policy["window_days"] == 30
 assert policy["latency_p95_target_ms"] > 0
-assert policy["error_rate_target_percent"] > 0
+expected_error_rate = 100 - policy["availability_target_percent"]
+assert abs(policy["error_rate_target_percent"] - expected_error_rate) < 0.000001
 
 fast = policy["burn_rate_alerts"]["fast"]
 slow = policy["burn_rate_alerts"]["slow"]
@@ -28,8 +29,10 @@ for group in rules["groups"]:
             alert_names.add(item["alert"])
 
 assert "ocx:http_request_success_ratio:5m" in rule_names
+assert "ocx:http_request_success_ratio:1h" in rule_names
 assert "ocx:http_request_latency_p95_seconds:5m" in rule_names
 assert "HighErrorBudgetBurnFast" in alert_names
+assert "HighErrorBudgetBurnSlow" in alert_names
 assert "HighLatencyP95" in alert_names
 
 minutes = policy["window_days"] * 24 * 60

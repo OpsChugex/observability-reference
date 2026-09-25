@@ -3,6 +3,8 @@ groups:
     rules:
       - record: ocx:http_request_success_ratio:5m
         expr: sum(rate(http_requests_total{status!~"5.."}[5m])) / sum(rate(http_requests_total[5m]))
+      - record: ocx:http_request_success_ratio:1h
+        expr: sum(rate(http_requests_total{status!~"5.."}[1h])) / sum(rate(http_requests_total[1h]))
       - record: ocx:http_request_latency_p95_seconds:5m
         expr: histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket[5m])))
 
@@ -15,6 +17,13 @@ groups:
           severity: page
         annotations:
           summary: Fast error-budget burn detected
+      - alert: HighErrorBudgetBurnSlow
+        expr: (1 - ocx:http_request_success_ratio:1h) > 0.006
+        for: 1h
+        labels:
+          severity: ticket
+        annotations:
+          summary: Sustained error-budget burn detected
       - alert: HighLatencyP95
         expr: ocx:http_request_latency_p95_seconds:5m > 0.300
         for: 10m

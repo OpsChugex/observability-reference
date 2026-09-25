@@ -4,7 +4,7 @@
   "window_days": 30,
   "availability_target_percent": 99.9,
   "latency_p95_target_ms": 300,
-  "error_rate_target_percent": 1.0,
+  "error_rate_target_percent": 0.1,
   "burn_rate_alerts": {
     "fast": {"window": "5m", "burn_rate": 14.4},
     "slow": {"window": "1h", "burn_rate": 6.0}
