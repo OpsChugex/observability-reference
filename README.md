@@ -35,3 +35,15 @@ python validate_observability.py
 A passing workflow proves that the reference SLO policy and alert rules are internally consistent for that commit.
 
 This repository does not claim that these rules are attached to a customer system, that the displayed targets are customer SLAs, or that production availability has been measured.
+
+---
+
+## Related OpsChugex engineering
+
+For context on the engineering area represented in this repository:
+
+- [Observability & Reliability](https://opschugex.com/service-observability)
+- [SRE Services](https://opschugex.com/sre)
+- [Engineering Proof](https://opschugex.com/engineering-proof)
+
+The repository classification, scope and limitations remain as documented above.
